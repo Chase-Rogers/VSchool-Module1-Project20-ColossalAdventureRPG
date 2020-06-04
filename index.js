@@ -3,12 +3,12 @@ const chalk = require('chalk');
 const itemNames = ['spoon', 'fork', 'tin foil hat', 'paper breastplate'];
 
 function itemDrop() {
-    this.name = itemNames[Math.floor(Math.random() * Math.floor(4))];
+    this.name = chalk.green(itemNames[Math.floor(Math.random() * Math.floor(4))]);
     this.attack = Math.ceil(Math.random() * Math.floor(3));
 }
 
 function Player(name) {
-    this.name = name;
+    this.name = chalk.green(name);
     this.hp = 100;
     this.inventory = [new itemDrop()];
     this.attack = 10; 
@@ -16,27 +16,18 @@ function Player(name) {
        return Math.floor(Math.random() * Math.floor(100))
     }
 }
-console.log(Math.ceil(Math.random()));
-console.log(Math.ceil(Math.random()));
-console.log(Math.ceil(Math.random()));
-console.log(Math.ceil(Math.random()));
-console.log(Math.ceil(Math.random()));
-console.log(Math.ceil(Math.random()));
-console.log(Math.ceil(Math.random()));
-console.log(Math.ceil(Math.random()));
-console.log(Math.ceil(Math.random()));
+
 function Mob(name) {
-    this.name = name;
+    this.name = chalk.red(name);
     this.hp = Math.ceil(Math.random() * Math.floor(200));
     this.inventory;
     this.attack = 10;
 }
 
-const name = readline.question(chalk.green('Hello, what is your name? '));
+const name = readline.question(chalk.blue(`Hello, what is your ${chalk.green('name')}? `));
 
 let toon = new Player(name);
-console.log('\b');
-console.log(toon.attack);
+console.log('\n');
 
 function toonBattle(enemy) {
     while (toon.hp > 0 && enemy.hp > 0) {
@@ -46,38 +37,40 @@ function toonBattle(enemy) {
         const enemyDamage = Math.floor(Math.random() * Math.floor(enemy.attack));
         if (action === 'r') {
             if (runSuccess >= 50) {
-                console.log('\b');
+                console.log('\n');
                 console.log(`You run away like the coward you are from the ${enemy.name}!`);
-                console.log('\b');
+                console.log('\n');
                 enemy.hp = 0;
                 continueAdventure();
             } else {
-                console.log('\b');
+                console.log('\n');
                 console.log(`You were mauled during your attempt to flee and suffered ${enemyDamage} points damage`);
                 toon.hp -= enemyDamage;
-                console.log('\b');
+                console.log('\n');
                 toonBattle(enemy)
             }
         } else {
             const toonDamage = Math.floor(Math.random() * Math.floor(toon.attack));
             const enemyDamage = Math.floor(Math.random() * Math.floor(enemy.attack));
+            console.log(`\n`);
             console.log(`You take a swing at the ${enemy.name} dealing ${toonDamage} points damage`);
             enemy.hp -= toonDamage;
-            console.log(enemy.name + ' has ' + enemy.hp + ' hp left')
-            console.log(enemy.name + ' takes a swing at you deal ' + enemyDamage + ' points damage');
+            console.log(`${enemy.name} has ${chalk.red(enemy.hp)} hp left`);
+            console.log(`\n`);
+            console.log(`${enemy.name} takes a swing at you deal ${enemyDamage} points damage`);
             toon.hp -= enemyDamage;
-            console.log('You have ' + toon.hp + ' health left')
-            
+            console.log(`${chalk.green('You')} have ${chalk.green(toon.hp)} health left`);
+            console.log(`\n`);
             if (toon.hp <= 0) {
                 console.log('You have died!');
             } else if (enemy.hp <= 0) {
                 console.log('You Won!');
-                console.log('You gain 15 health');
+                console.log(`You gain ${chalk.green('15 health')}`);
                 toon.hp += 15;
-                console.log('The ' + enemy.name + ' droped a ' + enemy.inventory.name)
+                console.log(`The ${enemy.name} droped a ${enemy.inventory.name}`)
                 toon.attack += enemy.inventory.attack;
                 toon.inventory.push(enemy.inventory);
-                console.log(toon.attack);
+                console.log(`\n`);
                 continueAdventure();
             }
         }
@@ -89,25 +82,28 @@ function checkForEncounter() {
     const mobName = mobs[Math.floor(Math.random() * Math.floor(3))]
     const enemy = new Mob(mobName);
     enemy.inventory =  new itemDrop(itemNames[Math.floor(Math.random() * Math.floor(4))]);
-    if (toon.walk() < 25) {
-        console.log(`\b`);
+    let walkScore = toon.walk();
+    if (walkScore < 25) {
+        console.log(`\n`);
         console.log(`You have been attacked by a ${enemy.name} who has ${enemy.hp} hp`);
-        console.log(`\b`);
+        console.log(`\n`);
         toonBattle(enemy);
     } else {
         console.log(`Your journey continues uneventful`);
+        console.log(`\n`);
         continueAdventure();
     }
 }
 
 function continueAdventure() {
     readline.setDefaultOptions({limit: ['w', 'q', 'print']});
-    let action = readline.question(chalk.green('Press w to proceed print to see status or q to quit your adventure. '));
+    let action = readline.question(chalk.blue('Press w to proceed print to see status or q to quit your adventure. '));
     if (action === 'w') {
         checkForEncounter();
     } else if (action === 'print') {
+        console.log(`\n`);
         console.log(`Your name is ${toon.name}`);
-        console.log(`You have ${toon.hp} hit points`);
+        console.log(`You have ${chalk.green(toon.hp)} hit points`);
         console.log(`You have the following items in your inventory:`)
         toon.inventory.forEach(i => console.log(i.name));
         continueAdventure();
@@ -115,5 +111,3 @@ function continueAdventure() {
     }
 }
 continueAdventure();
-
-
