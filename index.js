@@ -19,7 +19,7 @@ function Player(name) {
 
 function Mob(name) {
     this.name = chalk.red(name);
-    this.hp = Math.ceil(Math.random() * Math.floor(200));
+    this.hp = Math.ceil(Math.random() * Math.floor(100));
     this.inventory;
     this.attack = 10;
 }
@@ -77,6 +77,22 @@ function toonBattle(enemy) {
     }
 }
 
+function continueAdventure() {
+    readline.setDefaultOptions({limit: ['w', 'q', 'print']});
+    let action = readline.question(chalk.blue('Press w to proceed print to see status or q to quit your adventure. '));
+    if (action === 'w') {
+        checkForEncounter();
+    } else if (action === 'print') {
+        console.log(`\n`);
+        console.log(`Your name is ${toon.name}`);
+        console.log(`You have ${chalk.green(toon.hp)} hit points`);
+        console.log(`You have the following items in your inventory:`)
+        toon.inventory.forEach(i => console.log(i.name));
+        continueAdventure();
+    } else {
+    }
+}
+
 function checkForEncounter() {
     const mobs = ['Wolf', 'Bear', 'Harry Potter Fanatic']
     const mobName = mobs[Math.floor(Math.random() * Math.floor(3))]
@@ -95,19 +111,5 @@ function checkForEncounter() {
     }
 }
 
-function continueAdventure() {
-    readline.setDefaultOptions({limit: ['w', 'q', 'print']});
-    let action = readline.question(chalk.blue('Press w to proceed print to see status or q to quit your adventure. '));
-    if (action === 'w') {
-        checkForEncounter();
-    } else if (action === 'print') {
-        console.log(`\n`);
-        console.log(`Your name is ${toon.name}`);
-        console.log(`You have ${chalk.green(toon.hp)} hit points`);
-        console.log(`You have the following items in your inventory:`)
-        toon.inventory.forEach(i => console.log(i.name));
-        continueAdventure();
-    } else {
-    }
-}
+
 continueAdventure();

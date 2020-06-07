@@ -1,0 +1,23 @@
+{
+  "name": "project20-colossaladventurerpg",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Chase-Rogers/VSchool-Module1-Project20-ColossalAdventureRPG.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Chase-Rogers/VSchool-Module1-Project20-ColossalAdventureRPG/issues"
+  },
+  "homepage": "https://github.com/Chase-Rogers/VSchool-Module1-Project20-ColossalAdventureRPG#readme",
+  "dependencies": {
+    "chalk": "^4.0.0",
+    "readline-sync": "^1.4.10"
+  }
+}
